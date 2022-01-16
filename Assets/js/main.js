@@ -36,6 +36,11 @@ function add() {
         return;
     }
     //   Todo: reject duplicate contacts
+    var existingContacts = Contacts.filter(function (c) { return c.name.toLowerCase() === name.toLowerCase() && c.phone === number; });
+    if (existingContacts.length > 0) {
+        alert("This contact exists");
+        return;
+    }
     Contacts.push({
         id: Contacts.length + 1,
         name: name,
@@ -50,3 +55,4 @@ function clear() {
     var phoneInput = document.querySelector("#phone");
     phoneInput.value = "";
 }
+// Search Functionality

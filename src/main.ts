@@ -58,6 +58,12 @@ function add() {
     return;
   }
 //   Todo: reject duplicate contacts
+const existingContacts = Contacts.filter(c => c.name.toLowerCase() === name.toLowerCase() && c.phone === number);
+  if(existingContacts.length > 0){
+    alert("This contact exists");  
+    return;
+  }
+
 
   Contacts.push({
       id: Contacts.length+1,
@@ -70,8 +76,9 @@ function add() {
 function clear(){
     const nameInput = document.querySelector("#name") as HTMLInputElement; // this is cating; we converted the HTML Element to HTML Input element
     nameInput.value = "";
-    
-  
     const phoneInput = document.querySelector("#phone") as HTMLInputElement;
     phoneInput.value = "";
 }
+
+
+// Search Functionality
