@@ -1,6 +1,6 @@
 var Contacts = [];
-renderTable();
-function renderTable() {
+renderTable(Contacts);
+function renderTable(list) {
     var tbodyElement = document.querySelector("tbody");
     tbodyElement.remove();
     var newTbody = document.createElement('tbody');
@@ -27,7 +27,7 @@ function renderTable() {
     table.appendChild(newTbody);
 }
 function add() {
-    var nameInput = document.querySelector("#name"); // this is cating; we converted the HTML Element to HTML Input element
+    var nameInput = document.querySelector("#name"); // this is casting; we converted the HTML Element to HTML Input element
     var name = nameInput.value;
     var phoneInput = document.querySelector("#phone");
     var number = phoneInput.value;
@@ -46,7 +46,7 @@ function add() {
         name: name,
         phone: number
     });
-    renderTable();
+    renderTable(Contacts);
     clear();
 }
 function clear() {
@@ -55,4 +55,10 @@ function clear() {
     var phoneInput = document.querySelector("#phone");
     phoneInput.value = "";
 }
-// Search Functionality
+// Filtering Table Data by Searching
+function search(event) {
+    var inputElement = event.target;
+    var value = inputElement.value;
+    var result = Contacts.filter(function (c) { return c.name.startsWith(value.toUpperCase()); }); // foreach contact => where contact.name ....
+    renderTable(result);
+}

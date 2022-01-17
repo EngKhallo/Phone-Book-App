@@ -7,10 +7,10 @@ type Contact = {
 
 const Contacts: Contact[] = [];
 
-renderTable();
+renderTable(Contacts);
 
 
-function renderTable() {
+function renderTable(list: Contact[]) {
     const tbodyElement = document.querySelector("tbody");
     tbodyElement.remove();
 
@@ -46,7 +46,7 @@ function renderTable() {
 }
 
 function add() {
-  const nameInput = document.querySelector("#name") as HTMLInputElement; // this is cating; we converted the HTML Element to HTML Input element
+  const nameInput = document.querySelector("#name") as HTMLInputElement; // this is casting; we converted the HTML Element to HTML Input element
   const name = nameInput.value;
 
   const phoneInput = document.querySelector("#phone") as HTMLInputElement;
@@ -58,19 +58,23 @@ function add() {
     return;
   }
 //   Todo: reject duplicate contacts
-const existingContacts = Contacts.filter(c => c.name.toLowerCase() === name.toLowerCase() && c.phone === number);
-  if(existingContacts.length > 0){
+// const existingContacts = Contacts.filter(c => c.name.toLowerCase() === name.toLowerCase() && c.phone === number);
+//   if(existingContacts.length > 0){
+//     alert("This contact exists");  
+//     return;
+//   }
+
+  const index = Contacts.findIndex(c => c.name.toLowerCase() === name.toLowerCase() && c.phone === number);
+  if(index !== -1){
     alert("This contact exists");  
     return;
   }
-
-
   Contacts.push({
       id: Contacts.length+1,
       name: name,
       phone: number,
   });
-  renderTable();
+  renderTable(Contacts);
   clear();
 }
 function clear(){
@@ -81,4 +85,10 @@ function clear(){
 }
 
 
-// Search Functionality
+// Filtering Table Data by Searching
+function search(event: Event){
+    const inputElement = event.target as HTMLInputElement;
+    const value = inputElement.value;
+    const result = Contacts.filter(c => c.name.startsWith(value.toUpperCase())); // foreach contact => where contact.name ....
+    renderTable(result);
+}
